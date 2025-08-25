@@ -12,12 +12,12 @@ const SelectCardStage = ({ selectedCard, setSelectedCard }) => {
         {
           title: 'Language Contributions',
           description: 'See your overall language breakdown',
-          imageSrc: 'langs',
+          imageSrc: '?dummyParam=',
         },
         {
           title: 'Repository Contributions',
           description: 'See your most contributed repositories',
-          imageSrc: 'repos',
+          imageSrc: 'top-langs/?dummyParam=',
         },
       ].map((card, index) => (
         <button

@@ -2,14 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { BACKEND_URL } from '../../constants';
-
 import SVG from './SVG';
 import { classnames } from '../../utils';
 
 export const Image = ({ imageSrc, compact }) => {
   const userId = useSelector((state) => state.user.userId);
-  const fullImageSrc = `${BACKEND_URL}/user/svg/${userId}/${imageSrc}`;
+  const fullImageSrc = `https://github-readme-stats-phi-jet-58.vercel.app/api/${imageSrc}&username=${userId}&client=wizard`;
 
   return (
     <div className="relative h-full w-full relative">

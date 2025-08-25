@@ -66,7 +66,7 @@ const HomeScreen = () => {
   }, [selectedCard]);
 
   const time = selectedTimeRange.value;
-  let fullSuffix = `${selectedCard}?time_range=${time}`;
+  let fullSuffix = `${selectedCard}&time_range=${time}`;
 
   if (usePercent) {
     fullSuffix += '&use_percent=True';

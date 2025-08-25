@@ -19,7 +19,6 @@ import SettingsScreen from '../Settings';
 import { NoMatchScreen, RedirectScreen } from '../Misc';
 
 import { setPrivateAccess as _setPrivateAccess } from '../../redux/actions/userActions';
-import { getUserMetadata } from '../../api';
 import { WRAPPED_URL } from '../../constants';
 import Footer from './Footer';
 
@@ -60,7 +59,12 @@ function App() {
   useEffect(() => {
     async function getPrivateAccess() {
       if (userId && userId.length > 0) {
-        const result = await getUserMetadata(userId);
+        /*
+        Below function makes a backend call, but the endpoint doesn't exist in our mock setup.
+         */
+        // const result = await getUserMetadata(userId);
+        const result = { private_access: false }; // mock result
+
         if (result !== null && result.private_access !== undefined) {
           setPrivateAccess(result.private_access);
         }
