@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import BounceLoader from 'react-spinners/BounceLoader';
 import { FaGithub as GithubIcon } from 'react-icons/fa';
 
+import { v4 as uuidv4 } from 'uuid';
 import { ProgressBar } from '../../components';
 import {
   SelectCardStage,
@@ -13,7 +14,7 @@ import {
   DisplayStage,
 } from './stages';
 
-import { setUserKey, authenticate } from '../../api';
+import { authenticate } from '../../api';
 import { login as _login } from '../../redux/actions/userActions';
 import { PROD } from '../../constants';
 
@@ -111,8 +112,12 @@ const HomeScreen = () => {
         const redirect = `${url.split(subStr)[0]}${subStr}/user`;
         window.history.pushState({}, null, redirect);
         setIsLoading(true);
-        const userKey = await setUserKey(newUrl[1]);
-        const newUserId = await authenticate(newUrl[1], tempPrivateAccess);
+        const userKey = uuidv4();
+        const newUserId = await authenticate(
+          newUrl[1],
+          tempPrivateAccess,
+          userKey,
+        );
         login(newUserId, userKey);
         setIsLoading(false);
       }
