@@ -2,26 +2,43 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { Card } from '../../../components';
 
 const SelectCardStage = ({ selectedCard, setSelectedCard }) => {
+  const userId = useSelector((state) => state.user.userId);
   return (
     <div className="w-full flex flex-wrap">
       {[
         {
+          title: 'Lorem Ipsum',
+          description: 'Lorem ipsum dolor sit amet.',
+          imageSrc: 'pin/?repo=anuraghazra/github-readme-stats',
+        },
+        {
+          title: 'Lorem Ipsum',
+          description: 'Lorem ipsum dolor sit amet.',
+          imageSrc: 'gist/?id=bbfce31e0217a3689c8d961a356cb10d',
+        },
+        {
+          title: 'Lorem Ipsum',
+          description: 'Lorem ipsum dolor sit amet.',
+          imageSrc: 'wakatime/?username=ffflabs&langs_count=6',
+        },
+        {
           title: 'Language Contributions',
           description: 'See your overall language breakdown',
-          imageSrc: '?dummyParam=',
+          imageSrc: `top-langs/?&username=${userId}`,
         },
         {
           title: 'Repository Contributions',
           description: 'See your most contributed repositories',
-          imageSrc: 'top-langs/?dummyParam=',
+          imageSrc: `?&username=${userId}`,
         },
       ].map((card, index) => (
         <button
-          className="w-full sm:w-1/2 lg:w-1/3 p-2 lg:p-4"
+          className="p-2 lg:p-4"
           key={index}
           type="button"
           onClick={() => setSelectedCard(card.imageSrc)}

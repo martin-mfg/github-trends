@@ -1,13 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import SVG from './SVG';
 import { classnames } from '../../utils';
 
 export const Image = ({ imageSrc, compact }) => {
-  const userId = useSelector((state) => state.user.userId);
-  const fullImageSrc = `https://github-readme-stats-phi-jet-58.vercel.app/api/${imageSrc}&username=${userId}&client=wizard`;
+  const fullImageSrc = `https://github-readme-stats-phi-jet-58.vercel.app/api/${imageSrc}&client=wizard`;
 
   return (
     <div className="relative h-full w-full relative">

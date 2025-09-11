@@ -66,7 +66,7 @@ function App() {
       }
     }
     getPrivateAccess();
-  }, [userId]);
+  }, [userKey]);
 
   return (
     <div className="h-screen flex flex-col">
