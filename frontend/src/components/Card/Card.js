@@ -4,16 +4,12 @@ import PropTypes from 'prop-types';
 import SVG from './SVG';
 import { classnames } from '../../utils';
 
-export const Image = ({ imageSrc, compact }) => {
+export const Image = ({ imageSrc, compact, extraClasses = '' }) => {
   const fullImageSrc = `https://github-readme-stats-phi-jet-58.vercel.app/api/${imageSrc}&client=wizard`;
 
   return (
-    <div className="relative h-full w-full relative">
-      <SVG
-        className="object-cover h-full w-full"
-        url={fullImageSrc}
-        compact={compact}
-      />
+    <div className={`${extraClasses} relative w-full relative`}>
+      <SVG className="object-cover" url={fullImageSrc} compact={compact} />
     </div>
   );
 };
@@ -21,17 +17,26 @@ export const Image = ({ imageSrc, compact }) => {
 Image.propTypes = {
   imageSrc: PropTypes.string.isRequired,
   compact: PropTypes.bool,
+  extraClasses: PropTypes.string,
 };
 
 Image.defaultProps = {
   compact: false,
+  extraClasses: '',
 };
 
-export const Card = ({ title, description, imageSrc, selected, compact }) => {
+export const Card = ({
+  title,
+  description,
+  imageSrc,
+  selected,
+  compact,
+  extraClasses,
+}) => {
   return (
     <div
       className={classnames(
-        'p-6 rounded border-2',
+        'p-6 rounded border-2 h-[370px] w-[510px]',
         selected
           ? 'border-blue-500 bg-blue-50'
           : 'border-gray-200 bg-white hover:bg-gray-50',
@@ -39,7 +44,11 @@ export const Card = ({ title, description, imageSrc, selected, compact }) => {
     >
       <h2 className="text-xl font-medium title-font text-gray-900">{title}</h2>
       <p className="text-base leading-relaxed mt-2 mb-4">{description}</p>
-      <Image imageSrc={imageSrc} compact={compact} />
+      <Image
+        imageSrc={imageSrc}
+        compact={compact}
+        extraClasses={extraClasses}
+      />
     </div>
   );
 };
@@ -50,9 +59,11 @@ Card.propTypes = {
   imageSrc: PropTypes.string.isRequired,
   selected: PropTypes.bool,
   compact: PropTypes.bool,
+  extraClasses: PropTypes.string,
 };
 
 Card.defaultProps = {
   selected: false,
   compact: false,
+  extraClasses: '',
 };

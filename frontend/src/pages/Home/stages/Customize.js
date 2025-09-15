@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Image, DateRangeSection, CheckboxSection } from '../../../components';
+import { CardTypes } from '../../../utils';
 
 const CustomizeStage = ({
   selectedCard,
@@ -22,6 +23,7 @@ const CustomizeStage = ({
   setUseLocChanged,
   fullSuffix,
 }) => {
+  const cardType = selectedCard || CardTypes.STATS;
   return (
     <div className="w-full flex flex-wrap">
       <div className="h-auto lg:w-2/5 md:w-1/2 pr-10 p-10 rounded-sm bg-gray-200">
@@ -30,7 +32,7 @@ const CustomizeStage = ({
           setSelectedTimeRange={setSelectedTimeRange}
           privateAccess={privateAccess}
         />
-        {selectedCard === 'langs' && (
+        {cardType === CardTypes.TOP_LANGS && (
           <CheckboxSection
             title="Compact View"
             text="Use default view or compact view."
@@ -47,7 +49,7 @@ const CustomizeStage = ({
           setVariable={setUsePrivate}
           disabled={!privateAccess}
         />
-        {selectedCard === 'repos' && (
+        {cardType === CardTypes.STATS && (
           <CheckboxSection
             title="Group Other Repositories?"
             text="Group all remaining repositories together at the bottom of the card."
@@ -56,7 +58,7 @@ const CustomizeStage = ({
             setVariable={setGroupOther}
           />
         )}
-        {selectedCard === 'repos' && usePrivate && groupOther && (
+        {cardType === CardTypes.STATS && usePrivate && groupOther && (
           <CheckboxSection
             title="Group Private Repositories?"
             text="Force private repositories together at the bottom of the card."
@@ -65,7 +67,7 @@ const CustomizeStage = ({
             setVariable={setGroupPrivate}
           />
         )}
-        {selectedCard === 'langs' && (
+        {cardType === CardTypes.TOP_LANGS && (
           <CheckboxSection
             title="Percent vs LOC"
             text="Use absolute LOC (default) or percent to rank your top repositories"
@@ -81,7 +83,7 @@ const CustomizeStage = ({
           question="Use LOC changed?"
           variable={useLocChanged}
           setVariable={setUseLocChanged}
-          disabled={selectedCard === 'langs' && usePercent}
+          disabled={cardType === CardTypes.TOP_LANGS && usePercent}
         />
       </div>
       <div className="w-full lg:w-3/5 md:w-1/2 object-center pt-5 md:pt-0 pl-0 md:pl-5 lg:pl-0">

@@ -3,19 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
 import BounceLoader from 'react-spinners/BounceLoader';
-import { FaGithub as GithubIcon } from 'react-icons/fa';
 
 import { v4 as uuidv4 } from 'uuid';
 import { ProgressBar } from '../../components';
 import {
-  SelectCardStage,
   CustomizeStage,
-  ThemeStage,
   DisplayStage,
+  SelectCardStage,
+  ThemeStage,
 } from './stages';
 
 import { authenticate } from '../../api';
-import { login as _login } from '../../redux/actions/userActions';
+import { login as _login, logout } from '../../redux/actions/userActions';
 import { PROD } from '../../constants';
 
 const HomeScreen = () => {
@@ -36,7 +35,8 @@ const HomeScreen = () => {
   const [stage, setStage] = useState(0);
 
   // for stage one
-  const [selectedCard, setSelectedCard] = useState('langs');
+  const [selectedCard, setSelectedCard] = useState();
+  const [imageSrc, setImageSrc] = useState();
 
   // for stage two
   const defaultTimeRange = {
@@ -67,7 +67,7 @@ const HomeScreen = () => {
   }, [selectedCard]);
 
   const time = selectedTimeRange.value;
-  let fullSuffix = `${selectedCard}&time_range=${time}`;
+  let fullSuffix = `${imageSrc}&time_range=${time}`;
 
   if (usePercent) {
     fullSuffix += '&use_percent=True';
@@ -101,6 +101,7 @@ const HomeScreen = () => {
       const url = window.location.href;
 
       if (url.includes('error=')) {
+        logout();
         navigate('/');
       }
 
@@ -186,11 +187,13 @@ const HomeScreen = () => {
             <SelectCardStage
               selectedCard={selectedCard}
               setSelectedCard={setSelectedCard}
+              setImageSrc={setImageSrc}
             />
           )}
           {stage === 1 && (
             <CustomizeStage
               selectedCard={selectedCard}
+              imageSrc={imageSrc}
               selectedTimeRange={selectedTimeRange}
               setSelectedTimeRange={setSelectedTimeRange}
               usePrivate={usePrivate}
@@ -220,21 +223,6 @@ const HomeScreen = () => {
             <DisplayStage userId={userId} themeSuffix={themeSuffix} />
           )}
         </div>
-      </div>
-      <div className="fixed bottom-8 right-8">
-        <a
-          href="https://www.github.com/avgupta456/github-trends"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <button
-            type="button"
-            className="rounded-sm shadow bg-gray-700 hover:bg-gray-800 text-gray-50 px-3 py-2 flex items-center"
-          >
-            Star on
-            <GithubIcon className="ml-1.5 w-5 h-5" />
-          </button>
-        </a>
       </div>
     </div>
   );
