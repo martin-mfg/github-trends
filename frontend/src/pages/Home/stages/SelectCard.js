@@ -58,7 +58,7 @@ const SelectCardStage = ({ selectedCard, setSelectedCard, setImageSrc }) => {
             description={card.description}
             imageSrc={card.imageSrc}
             selected={selectedCard === card.cardType}
-            extraClasses="flex justify-center"
+            fixedSize="true"
           />
         </button>
       ))}
@@ -67,9 +67,13 @@ const SelectCardStage = ({ selectedCard, setSelectedCard, setImageSrc }) => {
 };
 
 SelectCardStage.propTypes = {
-  selectedCard: PropTypes.string.isRequired,
+  selectedCard: PropTypes.string,
   setSelectedCard: PropTypes.func.isRequired,
   setImageSrc: PropTypes.func.isRequired,
+};
+
+SelectCardStage.defaultProps = {
+  selectedCard: null,
 };
 
 export default SelectCardStage;

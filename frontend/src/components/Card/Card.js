@@ -31,12 +31,13 @@ export const Card = ({
   imageSrc,
   selected,
   compact,
-  extraClasses,
+  fixedSize,
 }) => {
   return (
     <div
       className={classnames(
-        'p-6 rounded border-2 h-[370px] w-[510px]',
+        'p-6 rounded border-2',
+        fixedSize ? 'h-[370px] w-[510px]' : '',
         selected
           ? 'border-blue-500 bg-blue-50'
           : 'border-gray-200 bg-white hover:bg-gray-50',
@@ -47,7 +48,7 @@ export const Card = ({
       <Image
         imageSrc={imageSrc}
         compact={compact}
-        extraClasses={extraClasses}
+        extraClasses={fixedSize ? 'flex justify-center' : ''}
       />
     </div>
   );
@@ -59,11 +60,11 @@ Card.propTypes = {
   imageSrc: PropTypes.string.isRequired,
   selected: PropTypes.bool,
   compact: PropTypes.bool,
-  extraClasses: PropTypes.string,
+  fixedSize: PropTypes.string,
 };
 
 Card.defaultProps = {
   selected: false,
   compact: false,
-  extraClasses: '',
+  fixedSize: false,
 };

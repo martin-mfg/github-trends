@@ -16,6 +16,7 @@ import {
 import { authenticate } from '../../api';
 import { login as _login, logout } from '../../redux/actions/userActions';
 import { PROD } from '../../constants';
+import { CardTypes } from '../../utils';
 
 const HomeScreen = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const HomeScreen = () => {
 
   // for stage one
   const [selectedCard, setSelectedCard] = useState();
-  const [imageSrc, setImageSrc] = useState();
+  const [imageSrc, setImageSrc] = useState(`?&username=${userId}`);
 
   // for stage two
   const defaultTimeRange = {
@@ -53,6 +54,10 @@ const HomeScreen = () => {
   const [groupPrivate, setGroupPrivate] = useState(false);
   const [useLocChanged, setUseLocChanged] = useState(false);
   const [useCompact, setUseCompact] = useState(false);
+
+  const [showTitle, setShowTitle] = useState(true);
+  const [customTitle, setCustomTitle] = useState('');
+  const [langsCount, setLangsCount] = useState();
 
   const resetCustomization = () => {
     setSelectedTimeRange(defaultTimeRange);
@@ -89,6 +94,19 @@ const HomeScreen = () => {
 
   if (useCompact) {
     fullSuffix += '&compact=True';
+  }
+
+  if (!showTitle) {
+    fullSuffix += '&hide_title=true';
+  }
+
+  if (customTitle) {
+    const encodedTitle = encodeURIComponent(customTitle);
+    fullSuffix += `&custom_title=${encodedTitle}`;
+  }
+
+  if (langsCount) {
+    fullSuffix += `&langs_count=${langsCount}`;
   }
 
   // for stage three
@@ -192,7 +210,7 @@ const HomeScreen = () => {
           )}
           {stage === 1 && (
             <CustomizeStage
-              selectedCard={selectedCard}
+              selectedCard={selectedCard || CardTypes.STATS}
               imageSrc={imageSrc}
               selectedTimeRange={selectedTimeRange}
               setSelectedTimeRange={setSelectedTimeRange}
@@ -209,6 +227,12 @@ const HomeScreen = () => {
               setUsePercent={setUsePercent}
               useLocChanged={useLocChanged}
               setUseLocChanged={setUseLocChanged}
+              showTitle={showTitle}
+              setShowTitle={setShowTitle}
+              customTitle={customTitle}
+              setCustomTitle={setCustomTitle}
+              langsCount={langsCount}
+              setLangsCount={setLangsCount}
               fullSuffix={fullSuffix}
             />
           )}
