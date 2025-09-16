@@ -1,14 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   BrowserRouter as Router,
-  Routes,
   Route,
+  Routes,
   useParams,
 } from 'react-router-dom';
+import {
+  logout as _logout,
+  setPrivateAccess as _setPrivateAccess,
+} from '../../redux/actions/userActions';
 
 import Header from './Header';
 import LandingScreen from '../Landing';
@@ -17,8 +21,6 @@ import { SignUpScreen } from '../Auth';
 import HomeScreen from '../Home';
 import SettingsScreen from '../Settings';
 import { NoMatchScreen, RedirectScreen } from '../Misc';
-
-import { setPrivateAccess as _setPrivateAccess } from '../../redux/actions/userActions';
 import { getUserMetadata } from '../../api';
 import { WRAPPED_URL } from '../../constants';
 import Footer from './Footer';
@@ -62,7 +64,11 @@ function App() {
     async function getPrivateAccess() {
       if (userKey && userKey.length > 0) {
         const privateAccess = await getUserMetadata(userKey);
-        setPrivateAccess(privateAccess);
+        if (privateAccess === null) {
+          dispatch(_logout());
+        } else {
+          setPrivateAccess(privateAccess);
+        }
       }
     }
     getPrivateAccess();

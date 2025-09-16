@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { useNavigate } from 'react-router-dom';
 import BounceLoader from 'react-spinners/BounceLoader';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -14,13 +12,11 @@ import {
 } from './stages';
 
 import { authenticate } from '../../api';
-import { login as _login, logout } from '../../redux/actions/userActions';
+import { login as _login } from '../../redux/actions/userActions';
 import { PROD } from '../../constants';
 import { CardTypes } from '../../utils';
 
 const HomeScreen = () => {
-  const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState(false);
 
   const userId = useSelector((state) => state.user.userId);
@@ -117,11 +113,6 @@ const HomeScreen = () => {
     async function redirectCode() {
       // After requesting Github access, Github redirects back to your app with a code parameter
       const url = window.location.href;
-
-      if (url.includes('error=')) {
-        logout();
-        navigate('/');
-      }
 
       // If Github API returns the code parameter
       if (url.includes('code=')) {
